@@ -4,6 +4,7 @@ using static TestApplication.Models.ReportModels;
 
 namespace TestApplication
 {
+    
     public interface IRequestManager
     {
         decimal GetContractAmountForCurrentYear();

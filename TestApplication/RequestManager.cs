@@ -10,11 +10,19 @@ namespace TestApplication
     {
         private UserContext _dbContext;
 
+        /// <summary>
+        /// Конструктор подключения к базе данных
+        /// </summary>
+        /// <param name="dbContext">контекст подключения к БД</param>
         public RequestManager(UserContext dbContext)
         {
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Сумма всех заключенных договоров за текущий год
+        /// </summary>
+        /// <returns>Сумма договоров за год</returns>
         public decimal GetContractAmountForCurrentYear()
         {
             string sql = "SELECT SUM(ContractAmount) AS TotalAmount " +
@@ -32,6 +40,10 @@ namespace TestApplication
             }
         }
 
+        /// <summary>
+        /// Сумма заключенных договоров по каждому контрагенту из России
+        /// </summary>
+        /// <returns>Лист объектов <CompanyName, TotalAmount></returns>
         public List<ContractAmountByRussianResult> GetContractAmountByRussian()
         {
             string sql = "SELECT LegalEntity.CompanyName, SUM(Contracts.ContractAmount) AS TotalAmount " +
@@ -51,6 +63,10 @@ namespace TestApplication
             }
         }
 
+        /// <summary>
+        /// Cписок e-mail уполномоченных лиц, заключивших договора за последние 30 дней, на сумму больше 40000
+        /// </summary>
+        /// <returns>Лист e-mails</returns>
         public List<string> GetPersonEmailsForRecentContracts()
         {
             string sql = "SELECT DISTINCT Individual.Email " +
@@ -69,6 +85,10 @@ namespace TestApplication
             }
         }
 
+        /// <summary>
+        /// Изменение статуса договоров для физических лиц старше 60 лет включительно.
+        /// </summary>
+        /// <returns>Колличество изменненых записей</returns>
         public int UpdateContractsStatusForElderlyIndividuals()
         {
             string sql = "UPDATE Contracts " +
@@ -88,6 +108,10 @@ namespace TestApplication
             }
         }
 
+        /// <summary>
+        /// Ищет записи физ.лиц у которых есть действующие договора по компаниям, расположенных в городе Москва.
+        /// </summary>
+        /// <returns>Лист объектов <ФИО, e-mail, моб. телефон, дату рождения></returns>
         public List<MoscowResident> GenerateReportForMoscowResidents()
         {
             string sql = "SELECT i.FirstName || ' ' || i.LastName || ' ' || i.Patronymic AS FullName, " +
@@ -108,6 +132,13 @@ namespace TestApplication
             }
         }
 
+        /// <summary>
+        /// Проверка подключения к БД
+        /// </summary>
+        /// <returns>
+        ///     true - подключение успешно
+        ///     false - проблемы с подключением
+        /// </returns>
         public bool IsDatabaseConnected()
         {
             try

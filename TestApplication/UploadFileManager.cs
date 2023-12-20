@@ -9,7 +9,10 @@ namespace TestApplication
 {
     public class UploadFileManager
     {
-        
+        /// <summary>
+        /// Сохранение данных в файл JSON
+        /// </summary>
+        /// <param name="data">Лист данных</param>        
         public static void SaveToJson(List<ReportModels.MoscowResident> data)
         {
             try
@@ -27,6 +30,10 @@ namespace TestApplication
 
         }
 
+        /// <summary>
+        /// Сохранение данных в файл XML
+        /// </summary>
+        /// <param name="data">Лист данных</param>
         public static void SaveToXml(List<ReportModels.MoscowResident> data)
         {
             try
