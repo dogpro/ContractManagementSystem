@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using TestApplication.Models;
+using static TestApplication.Models.ReportModels;
 
 namespace TestApplication
 {
     public interface IRequestManager
     {
         decimal GetContractAmountForCurrentYear();
-        decimal GetContractAmountByRussian();
+        List<ContractAmountByRussianResult> GetContractAmountByRussian();
         List<string> GetPersonEmailsForRecentContracts();
         int UpdateContractsStatusForElderlyIndividuals();
-        List<ReportModels.MoscowResident> GenerateReportForMoscowResidents();
+        List<MoscowResident> GenerateReportForMoscowResidents();
     }
 }

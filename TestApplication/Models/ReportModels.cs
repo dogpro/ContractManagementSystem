@@ -11,5 +11,11 @@ namespace TestApplication.Models
             public string Phone { get; set; }
             public string DateOfBirth { get; set; }
         }
+
+        public class ContractAmountByRussianResult
+        {
+            public string CompanyName { get; set; }
+            public decimal TotalAmount { get; set; }
+        }
     }
 }

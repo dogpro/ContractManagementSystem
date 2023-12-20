@@ -46,8 +46,21 @@ namespace TestApplication
                             break;
 
                         case "2":
-                            Console.WriteLine($"Сумма заключенных договоров по каждому контрагенту из России: " +
-                                              $"{requestManager.GetContractAmountByRussian()}\n");
+                            var resultDict = requestManager.GetContractAmountByRussian();
+
+                            Console.WriteLine($"Сумма заключенных договоров по каждому контрагенту из России:");
+
+                            if (resultDict == null)
+                            {
+                                break;
+                            }
+
+                            for (int i = 0 ; i < resultDict.Count; i++)
+                            {
+                                Console.WriteLine($"{i}. {resultDict[i].CompanyName} - {resultDict[i].TotalAmount} руб.");
+                            }
+
+                            Console.WriteLine();
                             break;
 
                         case "3":

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TestApplication.Models;
+using static TestApplication.Models.ReportModels;
 
 namespace TestApplication
 {
@@ -31,21 +32,22 @@ namespace TestApplication
             }
         }
 
-        public decimal GetContractAmountByRussian()
+        public List<ContractAmountByRussianResult> GetContractAmountByRussian()
         {
-            string sql = "SELECT SUM(ContractAmount) " +
-                         "FROM Contracts " +
-                         "INNER JOIN LegalEntity ON Contracts.LegalEntityId = LegalEntity.LegalEntityId " +
-                         "WHERE LegalEntity.Country = 'Россия';";
+            string sql = "SELECT LegalEntity.CompanyName, SUM(Contracts.ContractAmount) AS TotalAmount " +
+                 "FROM Contracts " +
+                 "INNER JOIN LegalEntity ON Contracts.LegalEntityId = LegalEntity.LegalEntityId " +
+                 "WHERE LegalEntity.Country = 'Россия' " +
+                 "GROUP BY LegalEntity.CompanyName;";
 
             try
             {
-                return _dbContext.Database.SqlQuery<decimal>(sql).FirstOrDefault();
+                return _dbContext.Database.SqlQuery<ContractAmountByRussianResult>(sql).ToList();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return -1;
+                return null;
             }
         }
 
@@ -86,7 +88,7 @@ namespace TestApplication
             }
         }
 
-        public List<ReportModels.MoscowResident> GenerateReportForMoscowResidents()
+        public List<MoscowResident> GenerateReportForMoscowResidents()
         {
             string sql = "SELECT i.FirstName || ' ' || i.LastName || ' ' || i.Patronymic AS FullName, " +
                      "i.Email, i.Phone, i.DateOfBirth " +
@@ -97,7 +99,7 @@ namespace TestApplication
 
             try
             {
-                return _dbContext.Database.SqlQuery<ReportModels.MoscowResident>(sql).ToList();
+                return _dbContext.Database.SqlQuery<MoscowResident>(sql).ToList();
             }
             catch (Exception e)
             {
